@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "OkWksB4MqqGgR/y5hCJENHtmmWiIBqptsr4P4TcXZC8zYUhkyK6qm0wJjoJV8ZZNeagF76Q3Tvy2ovXaCLBPpQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\emi_p\\OneDrive\\Desktop\\Image\\Image\\Taller de desarrollo\\InfiniteWalk\\InfiniteWalk\\InfiniteWalk.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\emi_p\\.nuget\\packages\\raylib-cs\\5.0.0\\raylib-cs.5.0.0.nupkg.sha512",
+    "C:\\Users\\emi_p\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
