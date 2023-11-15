@@ -44,8 +44,11 @@ class Program
     //Obstacles
     private static RectangleCharacter[] rectangleObstaclesArray = new RectangleCharacter[10];
     private static readonly Vector3[] sizeRectanglesArray = { new Vector3(5, 2.5f, 2), new Vector3(5, 2.5f, 2) };
+    private static readonly Color[] colorRectanglesArray = { Color.GREEN, Color.YELLOW };
     private static float timerObstacles = 0;
-    private static int timeBetweenObstacles = 2;
+    const float MIN_TIME_OBSTACLE = 2f;
+    const float MAX_TIME_OBSTACLE = 4f;
+    private static float timeBetweenObstacles = 2;
 
     //Coins
     private static SphereCharacter[] sphereCoinsArray = new SphereCharacter[10];
@@ -93,13 +96,14 @@ class Program
             Raylib.ClearBackground(Color.RAYWHITE);
 
             delta = Raylib.GetFrameTime();
+            SpawnObstacles();
 
             //DrawGameplay
             Raylib.BeginMode3D(camera);
 
             UpdatePlayer();
             UpdateCameraPosition();
-
+            UpdateObstacles();
 
             // Draw ground
             Raylib.DrawPlane(new Vector3(0.0f, 0.0f, 0.0f), new Vector2(128.0f, 128.0f), Color.LIGHTGRAY);
@@ -154,7 +158,6 @@ class Program
         {
             int randomIndex = random.Next(0, sizeRectanglesArray.Length);
             rectangleObstaclesArray[i].size = sizeRectanglesArray[randomIndex];
-            rectangleObstaclesArray[i].color = colorWall;
         }
     }
 
@@ -165,8 +168,9 @@ class Program
             if (rectangleObstaclesArray[i].isActive)
             {
                 rectangleObstaclesArray[i].position.Z += delta * PLAYER_SPEED;
+                Raylib.DrawCube(rectangleObstaclesArray[i].position, rectangleObstaclesArray[i].size.X, rectangleObstaclesArray[i].size.Y, rectangleObstaclesArray[i].size.Z, rectangleObstaclesArray[i].color);
             }
-            if (rectangleObstaclesArray[i].position.Z > player.position.Z + DIFF_CAMERA_Z)
+            if (rectangleObstaclesArray[i].position.Z > player.position.Z + 2)
             {
                 rectangleObstaclesArray[i].isActive = false;
                 rectangleObstaclesArray[i].position = player.position + new Vector3(0,0,DIFF_Z_SPAWN);
@@ -176,7 +180,26 @@ class Program
 
     private static void SpawnObstacles()
     {
-
+        timerObstacles += Raylib.GetFrameTime();
+        if (timerObstacles >= timeBetweenObstacles)
+        {
+            Console.WriteLine("SpawnObstacles is calling");
+            timeBetweenObstacles = (float)(random.NextDouble() * (MIN_TIME_OBSTACLE - MAX_TIME_OBSTACLE) + MIN_TIME_OBSTACLE);
+            timerObstacles = 0;
+            int positionX = random.Next((int)wallLeft.position.X, (int)wallRight.position.X);
+            Vector3 positionObstacle = new Vector3(positionX,1f,player.position.Z - DIFF_Z_SPAWN);
+            for (int i = 0; i < rectangleObstaclesArray.Length; i++)
+            {
+                int index = random.Next(0, colorRectanglesArray.Length);
+                if (!rectangleObstaclesArray[i].isActive)
+                {
+                    rectangleObstaclesArray[i].isActive = true;
+                    rectangleObstaclesArray[i].position = positionObstacle;
+                    rectangleObstaclesArray[i].color = colorRectanglesArray[index];
+                    return;
+                }
+            }
+        }
     }
 
     private static void UpdateCameraPosition()
