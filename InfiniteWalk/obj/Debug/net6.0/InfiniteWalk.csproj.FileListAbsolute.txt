@@ -20,3 +20,25 @@ C:\Users\emi_p\OneDrive\Desktop\Image\Image\Taller de desarrollo\InfiniteWalk\In
 C:\Users\emi_p\OneDrive\Desktop\Image\Image\Taller de desarrollo\InfiniteWalk\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.pdb
 C:\Users\emi_p\OneDrive\Desktop\Image\Image\Taller de desarrollo\InfiniteWalk\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.genruntimeconfig.cache
 C:\Users\emi_p\OneDrive\Desktop\Image\Image\Taller de desarrollo\InfiniteWalk\InfiniteWalk\obj\Debug\net6.0\ref\InfiniteWalk.dll
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\bin\Debug\net6.0\InfiniteWalk.exe
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\bin\Debug\net6.0\InfiniteWalk.deps.json
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\bin\Debug\net6.0\InfiniteWalk.runtimeconfig.json
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\bin\Debug\net6.0\InfiniteWalk.dll
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\bin\Debug\net6.0\InfiniteWalk.pdb
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\bin\Debug\net6.0\Raylib-cs.dll
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\bin\Debug\net6.0\runtimes\linux-x64\native\libraylib.so
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\bin\Debug\net6.0\runtimes\osx-arm64\native\libraylib.dylib
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\bin\Debug\net6.0\runtimes\osx-x64\native\libraylib.dylib
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\bin\Debug\net6.0\runtimes\win-x64\native\raylib.dll
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\bin\Debug\net6.0\runtimes\win-x86\native\raylib.dll
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.csproj.AssemblyReference.cache
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.AssemblyInfoInputs.cache
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.AssemblyInfo.cs
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.csproj.CoreCompileInputs.cache
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.csproj.CopyComplete
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.dll
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\refint\InfiniteWalk.dll
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.pdb
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.genruntimeconfig.cache
+C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\ref\InfiniteWalk.dll
