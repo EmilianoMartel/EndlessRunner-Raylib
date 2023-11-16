@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\drago\\OneDrive\\Escritorio\\EndlessRunner-Raylib\\InfiniteWalk\\InfiniteWalk.csproj": {}
+    "C:\\Users\\emi_p\\OneDrive\\Desktop\\Image\\Image\\Taller de desarrollo\\InfiniteWalk\\InfiniteWalk\\InfiniteWalk.csproj": {}
   },
   "projects": {
-    "C:\\Users\\drago\\OneDrive\\Escritorio\\EndlessRunner-Raylib\\InfiniteWalk\\InfiniteWalk.csproj": {
+    "C:\\Users\\emi_p\\OneDrive\\Desktop\\Image\\Image\\Taller de desarrollo\\InfiniteWalk\\InfiniteWalk\\InfiniteWalk.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\drago\\OneDrive\\Escritorio\\EndlessRunner-Raylib\\InfiniteWalk\\InfiniteWalk.csproj",
+        "projectUniqueName": "C:\\Users\\emi_p\\OneDrive\\Desktop\\Image\\Image\\Taller de desarrollo\\InfiniteWalk\\InfiniteWalk\\InfiniteWalk.csproj",
         "projectName": "InfiniteWalk",
-        "projectPath": "C:\\Users\\drago\\OneDrive\\Escritorio\\EndlessRunner-Raylib\\InfiniteWalk\\InfiniteWalk.csproj",
-        "packagesPath": "C:\\Users\\drago\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\drago\\OneDrive\\Escritorio\\EndlessRunner-Raylib\\InfiniteWalk\\obj\\",
+        "projectPath": "C:\\Users\\emi_p\\OneDrive\\Desktop\\Image\\Image\\Taller de desarrollo\\InfiniteWalk\\InfiniteWalk\\InfiniteWalk.csproj",
+        "packagesPath": "C:\\Users\\emi_p\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\emi_p\\OneDrive\\Desktop\\Image\\Image\\Taller de desarrollo\\InfiniteWalk\\InfiniteWalk\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\drago\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\emi_p\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -61,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
         }
       }
     }

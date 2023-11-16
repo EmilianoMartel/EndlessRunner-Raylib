@@ -1,4 +1,5 @@
 ﻿using Raylib_cs;
+using System.Net.NetworkInformation;
 using System.Numerics;
 
 class Program
@@ -21,9 +22,20 @@ class Program
         public bool isActive;
     }
 
+    public struct Button
+    {
+        public Vector2 position;
+        public Vector2 size;
+        public Color color;
+        public Color selectedColor;
+        public string text;
+    }
+
     //Screen
     const int SCREEN_WIDTH = 1240;
     const int SCREEN_HEIGTH = 720;
+    const string TITLE = "Endless runner";
+    const string CREDITS = "By Emiliano Martel";
 
     //Camera
     const float DIFF_CAMERA_Z = 5f;
@@ -55,8 +67,9 @@ class Program
     private static SphereCharacter[] coinsArray = new SphereCharacter[10];
     private static readonly float COIN_SIZE = 0.5f;
     private static readonly Color COIN_COLOR = Color.YELLOW;
+    const int COIN_SCORE = 10;
     const float MIN_TIME_COIN = 2f;
-    const float MAX_TIME_COUN = 4f;
+    const float MAX_TIME_COIN = 4f;
     private static float timerCoins = 0;
     private static float timeBetweenCoins = 2;
 
@@ -75,6 +88,25 @@ class Program
     private static readonly Vector3 WALL_WIN_POSITION = new Vector3(0.0f, 2.5f, -200.0f);
     private static readonly Vector3 WALL_LEFT_POSITION = new Vector3(-10.0f, 2.5f, 0.0f);
     private static readonly Vector3 WALL_RIGHT_POSITION = new Vector3(10.0f, 2.5f, 0.0f);
+
+    //Buttons
+    private static Button playButton;
+    private static Button rePlayButton;
+    private static Button scoreButton;
+    private static Button menuButton;
+    private static readonly Color SELECTED_COLOR = Color.LIGHTGRAY;
+    private static readonly Color COLOR_BUTTON = Color.GRAY;
+
+    private static string endText = "";
+
+    private static bool gameStart = false;
+    private static bool isMenu = true;
+
+    //Score
+    private static int score = 0;
+    const int DISTANCE_INCREASE_SCORE = 10;
+    const int INCREASE_SCORE = 1;
+    private static float distance;
 
     public static void Main()
     {
@@ -105,26 +137,50 @@ class Program
         wallWin.color = winWallColor;
         wallWin.bounds = RectangleBounds(wallWin);
 
+        //Buttons
+        playButton.position = new Vector2(250,250);
+        playButton.size = new Vector2(200,80);
+        playButton.color = COLOR_BUTTON;
+        playButton.selectedColor = SELECTED_COLOR;
+        playButton.text = "Play";
+        rePlayButton.position = new Vector2(250, 250);
+        rePlayButton.size = new Vector2(200, 80);
+        rePlayButton.color = COLOR_BUTTON;
+        rePlayButton.selectedColor = SELECTED_COLOR;
+        rePlayButton.text = "Re play";
+        scoreButton.position = new Vector2(250, 250);
+        scoreButton.size = new Vector2(200, 80);
+        scoreButton.color = COLOR_BUTTON;
+        scoreButton.selectedColor = SELECTED_COLOR;
+        scoreButton.text = "Scores";
+        menuButton.position = new Vector2(250, 250);
+        menuButton.size = new Vector2(200, 80);
+        menuButton.color = COLOR_BUTTON;
+        menuButton.selectedColor = SELECTED_COLOR;
+        menuButton.text = "Menu";
+
         //Instanciate Obstacles
         CreateObstacles();
 
         //Instanciate Coins
         CreateCoins();
 
+        //Score
+        distance = player.position.Z;
+
         while (!Raylib.WindowShouldClose())
         {
-            Raylib.ClearBackground(Color.RAYWHITE);
+            Raylib.ClearBackground(Color.SKYBLUE);
 
             delta = Raylib.GetFrameTime();
-            SpawnObstacles();
 
             //DrawGameplay
             Raylib.BeginMode3D(camera);
 
-            UpdatePlayer();
-            UpdateCameraPosition();
-            UpdateObstacles();
-            UpdateCoins();
+            if (gameStart)
+            {
+                Gameplay();
+            }
 
             // Draw ground
             Raylib.DrawPlane(groundPosition, groundSize, Color.LIGHTGRAY);
@@ -148,6 +204,7 @@ class Program
             //Draw UI
             Raylib.BeginDrawing();
 
+            DrawUI();
 
             Raylib.EndDrawing();
         }
@@ -156,13 +213,77 @@ class Program
 
     private static void DrawUI()
     {
+        if (gameStart)
+        {
+            Raylib.DrawText(score.ToString(), 20, 100, 50, Color.WHITE);
+        }
+        else
+        {
+            if (isMenu)
+            {
+                Menu();
+            }
+            else
+            {
+                Raylib.DrawText(TITLE, 50, (SCREEN_WIDTH - 200) / 2, 50, Color.WHITE);
+                Raylib.DrawText(CREDITS, 50, (SCREEN_WIDTH - 200) / 2, 50, Color.WHITE);
+            }
+        }
+    }
 
+    //Fix
+    private static bool ButtonLogic(Button button, string text, Color colorSelected, Color colorDefault)
+    {
+        if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), button))
+        {
+            Raylib.DrawRectangleRec(button, colorSelected);
+            Raylib.DrawText(text, 0, (SCREEN_WIDTH - 200) / 2, 50, Color.WHITE); ;
+            if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
+            {
+                return true;
+            }
+        }
+        else
+        {
+            Raylib.DrawRectangleRec(button, colorDefault);
+        }
+        return false;
+    }
+
+    private static void Menu()
+    {
+        Rectangle button = new Rectangle(SCREEN_WIDTH / 2 - 100, SCREEN_HEIGTH / 2 - 40, 200, 80);
+
+
+        Raylib.DrawText(TITLE, 50, (SCREEN_WIDTH - 200) / 2, 50, Color.WHITE);
+        Raylib.DrawText(CREDITS, 50, (SCREEN_WIDTH - 200) / 2, 50, Color.WHITE);
+
+    }
+
+    private static void Gameplay()
+    {
+        SpawnObstacles();
+        SpawnCoins();
+        UpdatePlayer();
+        UpdateCameraPosition();
+        UpdateObstacles();
+        UpdateCoins();
+        UpdateScore();
     }
 
     private static void DrawGameSphere(SphereCharacter character)
     {
         Raylib.DrawSphere(character.position, character.size, character.color);
         Raylib.DrawSphereWires(character.position, character.size, 8, 8, character.lineColor);
+    }
+
+    private static void UpdateScore()
+    {
+        if (player.position.Z <= distance - DISTANCE_INCREASE_SCORE)
+        {
+            distance = player.position.Z;
+            score += INCREASE_SCORE;
+        }
     }
 
     private static void UpdatePlayer()
@@ -194,7 +315,24 @@ class Program
 
     private static void UpdateCoins()
     {
-
+        for (int i = 0; i < coinsArray.Length; i++)
+        {
+            if (coinsArray[i].isActive)
+            {
+                coinsArray[i].position.Z += delta * PLAYER_SPEED;
+                DrawGameSphere(coinsArray[i]);
+                if (Raylib.CheckCollisionSpheres(player.position, player.size, coinsArray[i].position, coinsArray[i].size))
+                {
+                    score += COIN_SCORE;
+                    coinsArray[i].isActive = false;
+                }
+                if (coinsArray[i].position.Z >= player.position.Z)
+                {
+                    coinsArray[i].isActive = false;
+                    coinsArray[i].position = player.position + new Vector3(0, 0, DIFF_Z_SPAWN);
+                }
+            }
+        }
     }
 
     private static void CreateObstacles()
@@ -232,11 +370,32 @@ class Program
     {
         if (isWinner)
         {
-
+            endText = "You win.";
         }
         else
         {
+            endText = "You lose.";
+        }
+    }
 
+    private static void SpawnCoins()
+    {
+        timerCoins += Raylib.GetFrameTime();
+        if (timerCoins >= timeBetweenCoins)
+        {
+            timeBetweenCoins = (float)(random.NextDouble() * (MIN_TIME_COIN - MAX_TIME_COIN) + MIN_TIME_COIN);
+            timerCoins = 0;
+            int positionX = random.Next((int)wallLeft.position.X, (int)wallRight.position.X);
+            Vector3 positionObstacle = new Vector3(positionX, 1f, player.position.Z - DIFF_Z_SPAWN);
+            for (int i = 0; i < coinsArray.Length; i++)
+            {
+                if (!coinsArray[i].isActive)
+                {
+                    coinsArray[i].isActive = true;
+                    coinsArray[i].position = positionObstacle;
+                    return;
+                }
+            }
         }
     }
 
