@@ -99,19 +99,35 @@ class Program
 
     private static string endText = "";
 
+    //Bools menu and gameplay
     private static bool gameStart = false;
     private static bool isMenu = true;
+    private static bool endGame = false;
+    private static bool isScoreMenu = false;
 
     //Score
     private static int score = 0;
     const int DISTANCE_INCREASE_SCORE = 10;
     const int INCREASE_SCORE = 1;
     private static float distance;
+    private static int bestScore = 0;
+
+    //Path
+    private static string path = Path.Combine(Environment.CurrentDirectory,@"data.txt");
 
     public static void Main()
     {
         Raylib.InitWindow(SCREEN_WIDTH, SCREEN_HEIGTH, "Endless Runner");
         Raylib.SetTargetFPS(60);
+
+        if (File.Exists(path))
+        {
+            int num;
+            if(int.TryParse(File.ReadAllText(path), out num))
+            {
+                bestScore = num;
+            }
+        }
 
         camera.Up = new Vector3(0.0f, 1.0f, 0.0f);
         camera.FovY = 60.0f;
@@ -138,22 +154,25 @@ class Program
         wallWin.bounds = RectangleBounds(wallWin);
 
         //Buttons
-        playButton.position = new Vector2(250,250);
-        playButton.size = new Vector2(200,80);
+        playButton.position = new Vector2(250, 250);
+        playButton.size = new Vector2(200, 80);
         playButton.color = COLOR_BUTTON;
         playButton.selectedColor = SELECTED_COLOR;
         playButton.text = "Play";
+
         rePlayButton.position = new Vector2(250, 250);
         rePlayButton.size = new Vector2(200, 80);
         rePlayButton.color = COLOR_BUTTON;
         rePlayButton.selectedColor = SELECTED_COLOR;
         rePlayButton.text = "Re play";
-        scoreButton.position = new Vector2(250, 250);
+
+        scoreButton.position = new Vector2(250, 400);
         scoreButton.size = new Vector2(200, 80);
         scoreButton.color = COLOR_BUTTON;
         scoreButton.selectedColor = SELECTED_COLOR;
         scoreButton.text = "Scores";
-        menuButton.position = new Vector2(250, 250);
+
+        menuButton.position = new Vector2(250, 400);
         menuButton.size = new Vector2(200, 80);
         menuButton.color = COLOR_BUTTON;
         menuButton.selectedColor = SELECTED_COLOR;
@@ -179,6 +198,7 @@ class Program
 
             if (gameStart)
             {
+                isMenu = false;
                 Gameplay();
             }
 
@@ -208,6 +228,7 @@ class Program
 
             Raylib.EndDrawing();
         }
+        ReWriteScore();
         Raylib.CloseWindow();
     }
 
@@ -223,21 +244,33 @@ class Program
             {
                 Menu();
             }
-            else
+            else if (endGame)
             {
-                Raylib.DrawText(TITLE, 50, (SCREEN_WIDTH - 200) / 2, 50, Color.WHITE);
-                Raylib.DrawText(CREDITS, 50, (SCREEN_WIDTH - 200) / 2, 50, Color.WHITE);
+                EndGameMenu();
+            }
+            else if (isScoreMenu)
+            {
+                ScoreMenu();
             }
         }
     }
 
-    //Fix
-    private static bool ButtonLogic(Button button, string text, Color colorSelected, Color colorDefault)
+    private static void ScoreMenu()
     {
+        Raylib.DrawText(TITLE, (SCREEN_WIDTH - 300) / 2, 50, 50, Color.WHITE);
+        Raylib.DrawText("Best score", (SCREEN_WIDTH - 300) / 2, 200, 50, Color.WHITE);
+        Raylib.DrawText(bestScore.ToString(), (SCREEN_WIDTH - 300) / 2, 300, 50, Color.WHITE);
+        isMenu = ButtonLogic(menuButton);
+    }
+
+    private static bool ButtonLogic(Button buttonStruct)
+    {
+        Rectangle button = new Rectangle(buttonStruct.position.X, buttonStruct.position.Y, buttonStruct.size.X, buttonStruct.size.Y);
+
         if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), button))
         {
-            Raylib.DrawRectangleRec(button, colorSelected);
-            Raylib.DrawText(text, 0, (SCREEN_WIDTH - 200) / 2, 50, Color.WHITE); ;
+            Raylib.DrawRectangleRec(button, buttonStruct.selectedColor);
+            Raylib.DrawText(buttonStruct.text, (int)buttonStruct.position.X, (int)buttonStruct.position.Y, 50, Color.WHITE);
             if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
             {
                 return true;
@@ -245,19 +278,49 @@ class Program
         }
         else
         {
-            Raylib.DrawRectangleRec(button, colorDefault);
+            Raylib.DrawRectangleRec(button, buttonStruct.color);
+            Raylib.DrawText(buttonStruct.text, (int)buttonStruct.position.X, (int)buttonStruct.position.Y, 50, Color.WHITE);
         }
         return false;
     }
 
+    private static void EndGameMenu()
+    {
+        Raylib.DrawText(endText, (SCREEN_WIDTH - 300) / 2, 50, 50, Color.WHITE);
+        Raylib.DrawText($"Your score is {score}", (SCREEN_WIDTH - 300) / 2, 100, 50, Color.WHITE);
+        if (score > bestScore)
+        {
+            Raylib.DrawText("New best score", (SCREEN_WIDTH - 300) / 2, 150, 50, Color.WHITE);
+        }
+        gameStart = ButtonLogic(rePlayButton);
+        if (gameStart)
+        {
+            ResetGame();
+            endGame = false;
+        }
+        isMenu = ButtonLogic(menuButton);
+        if (isMenu)
+        {
+            endGame = false;
+            isScoreMenu = false;
+        }
+    }
+
     private static void Menu()
     {
-        Rectangle button = new Rectangle(SCREEN_WIDTH / 2 - 100, SCREEN_HEIGTH / 2 - 40, 200, 80);
-
-
-        Raylib.DrawText(TITLE, 50, (SCREEN_WIDTH - 200) / 2, 50, Color.WHITE);
+        Raylib.DrawText(TITLE, (SCREEN_WIDTH - 300) / 2, 50, 50, Color.WHITE);
         Raylib.DrawText(CREDITS, 50, (SCREEN_WIDTH - 200) / 2, 50, Color.WHITE);
-
+        gameStart = ButtonLogic(playButton);
+        if (gameStart)
+        {
+            ResetGame();
+            endGame = false;
+        }
+        isScoreMenu = ButtonLogic(scoreButton);
+        if (isScoreMenu)
+        {
+            isMenu = false;
+        }
     }
 
     private static void Gameplay()
@@ -368,6 +431,8 @@ class Program
 
     private static void WinOrLoseLogic(bool isWinner)
     {
+        endGame = true;
+        gameStart = false;
         if (isWinner)
         {
             endText = "You win.";
@@ -376,6 +441,43 @@ class Program
         {
             endText = "You lose.";
         }
+        if (score > bestScore)
+        {
+            bestScore = score;
+        }
+    }
+
+    private static void ReWriteScore()
+    {
+        try
+        {
+            File.WriteAllText(path, bestScore.ToString());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error al intentar escribir en el archivo: " + ex.Message);
+        }
+    }
+
+    private static void ResetGame()
+    {
+        player.position = ORIGINAL_CHARACTER_POSITION;
+        distance = player.position.Z;
+        for (int i = 0; i < obstaclesArray.Length; i++)
+        {
+            if (obstaclesArray[i].isActive)
+            {
+                obstaclesArray[i].isActive = false;
+            }
+        }
+        for (int i = 0; i < coinsArray.Length; i++)
+        {
+            if (coinsArray[i].isActive)
+            {
+                coinsArray[i].isActive = false;
+            }
+        }
+        score = 0;
     }
 
     private static void SpawnCoins()

@@ -42,3 +42,4 @@ C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\n
 C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.pdb
 C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\InfiniteWalk.genruntimeconfig.cache
 C:\Users\drago\OneDrive\Escritorio\EndlessRunner-Raylib\InfiniteWalk\obj\Debug\net6.0\ref\InfiniteWalk.dll
+C:\Users\emi_p\OneDrive\Desktop\Image\Image\Taller de desarrollo\InfiniteWalk\InfiniteWalk\bin\Debug\net6.0\Program.cs
